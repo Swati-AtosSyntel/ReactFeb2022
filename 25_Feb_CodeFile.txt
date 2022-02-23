@@ -1,0 +1,177 @@
+App1.js
+-----------
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import Employee from './Employee';
+import App2 from './App2';
+import Updatearray from './Updatearray';
+import Updatearray1 from './UpdateSingleItem';
+class App1 extends React.Component{
+    render(){
+        return(
+            <div>
+                <h3>Welcome to React Class Component</h3>
+                <App/>
+                <App name="Swati"/>
+                <h4>Hello, React is {this.props.feature}</h4>
+                <Employee/>
+                <hr/>
+                <App2/>
+                <Updatearray/>
+                <Updatearray1/>
+            </div>
+        )
+    }
+}
+export default App1;
+=====================================================================
+App2.js
+-------------
+import React,{Component} from 'react';
+
+class App2 extends React.Component{
+    constructor(){
+        super();
+        this.state={num:0}
+        this.changeNumber=this.changeNumber.bind(this);
+    }
+    changeNumber(){
+        this.setState({num:this.state.num+2});
+    }
+    style1={
+        color:'blue',
+        fontSize:'16px'
+    }
+    render(){
+        return(
+            <div style={this.style1}>
+                <h3>{this.state.num}</h3>
+                <button onClick={this.changeNumber}>Update Number</button>
+            </div>
+        )
+    }
+}
+export default App2;
+=========================================================================
+Employee.js
+------------------
+import React from 'react';
+
+class Employee extends React.Component{
+    constructor(){
+        super();
+        this.state={data:[
+            {EmployeeId:100,Ename:"Nishant"},
+            {EmployeeId:101,Ename:"Anish"},
+            {EmployeeId:102,Ename:"Nisha"},
+            {EmployeeId:103,Ename:"Manisha"}
+        ]};
+    }
+    render(){
+        return(
+            <div>
+                {/* <h4>Employee ID: {this.state.EmployeeId}</h4>
+                <h4>Employee Name: {this.state.Ename}</h4>
+                <hr/>
+                <TableData empid={this.state.EmployeeId} ename={this.state.Ename}/> */}
+                <table border="1">
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                    </tr>
+                {this.state.data.map(employee=><TableData emp={employee}/>)}
+                </table>
+            </div>
+        )
+    }
+}
+class TableData extends React.Component{
+    render(){
+        return(
+        
+                    <tr>
+                        <td>{this.props.emp.EmployeeId}</td>
+                        <td>{this.props.emp.Ename}</td>
+                    </tr>
+        
+        )
+    }
+}
+export default Employee;
+==========================================================================
+updateArray.js
+--------------------
+import React from 'react';
+
+class Updatearray extends React.Component{
+    constructor(){
+        super();
+        this.state={list:[23,33,54]}
+        this.updateState=this.updateState.bind(this);
+    };
+    updateState(){
+        this.setState(state=>{
+            const list=state.list.map(num=>num+1);
+            return {list};
+        });
+    }
+    render(){
+        return(
+            <div>
+                <ul>
+                    {this.state.list.map(item=>(<li key={item}>{item}</li>))}
+                </ul>
+                <button onClick={this.updateState}>Update State</button>
+            </div>
+        )
+    }
+}
+    export default Updatearray;
+============================================================================
+UpdateSingleItem.js
+------------------------------
+import React from 'react';
+
+class Updatearray1 extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={list:[23,33,54]}
+        this.updateState=this.updateState.bind(this);
+    };
+    updateState(i){
+        const element=this.state.list.map((item,index)=>{
+            if(index===i){
+                return item;
+            }
+        }
+        );
+        alert(element);
+    //    this.setState(state=>{
+          
+    //        const list=state.list.map((item,index)=>{
+    //            if(index===i){
+    //                return item+1;
+
+    //            }
+    //            else{
+    //                return item;
+    //            }
+    //        });
+    //        return {list};
+    //    });
+    };
+    render(){
+        return(
+            <div>
+                <ul>
+                    {this.state.list.map((item,index)=>(<li key={item}>{item}
+                <h3>{index}</h3>
+                <button onClick={this.updateState(index)}>Update State</button>
+                </li>))}
+                </ul>
+            </div>
+        )
+    }
+}
+export default Updatearray1;
